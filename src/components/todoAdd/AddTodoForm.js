@@ -9,12 +9,11 @@ function AddTodoForm({ todos, setTodos }) {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', userid: localStorage.getItem("userid") },
           body: JSON.stringify(todo)
-        })
+        });
         return true
     } catch (error){
       throw error
     }
-
 
   }
   function submit(e) {
@@ -22,9 +21,9 @@ function AddTodoForm({ todos, setTodos }) {
     if (title.trim()) {
       const date = new Date().toISOString();
       const todo = {
-        id: Date.now(),
         text: title,
-        isPerformed: false,
+        isTagged:false,
+        isPerfomed:false,
         date: date
       }
       const newTodos = [...todos];
