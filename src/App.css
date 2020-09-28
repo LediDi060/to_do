@@ -1,3 +1,14 @@
+
+/* #components-dropdown-demo-arrow .ant-btn {
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+.ant-row-rtl #components-dropdown-demo-arrow .ant-btn {
+  margin-right: 0;
+  margin-bottom: 8px;
+  margin-left: 8px;
+} */
+
 body {
   background-color: rgba(173, 170, 170, 0.678);
 }
@@ -35,10 +46,11 @@ input {
 
 .App_todo {
   width: 280px;
-  height: 160px;
+  height: 200px;
   background-color: lightblue;
   border-radius: 15px;
   align-content: center;
+  justify-items: center;
   margin: 0 auto;
   -webkit-box-shadow: 5px 5px 0px 0px #1d8d9c, 10px 10px 0px 0px #0f8f94af, 15px 15px 0px 0px #8fe7e7, 20px 20px 0px 0px #CAE6FF, 25px 25px 0px 0px #E1EEFF, 0px 15px 18px 17px rgba(122, 175, 178, 0);
   box-shadow: 5px 5px 0px 0px #1d8d9c, 10px 10px 0px 0px #0f8f94af, 15px 15px 0px 0px #8fe7e7, 20px 20px 0px 0px #CAE6FF, 25px 25px 0px 0px #E1EEFF, 0px 15px 18px 17px rgba(122, 175, 178, 0);
@@ -58,13 +70,16 @@ input {
   display: flex; 
   align-content: center;
   justify-content: center;
-  align-items: center
+  align-items: center;
+  outline: transparent;
 }
 
 .todo__add-new {
-  width: 260px;
+  width: 280px;
   height: 35px;
   display: flex;
+  justify-content: flex-end;
+  padding-left: 20px;
   align-content: center;
   justify-content: center;
   margin-bottom: 7px;
@@ -88,15 +103,15 @@ input {
 .todo__list {
   justify-content: space-between;
   width:  auto;
-  height: 120px;
+  height: 127px;
+  padding-top: 4px;
   overflow: auto;
   background-color: lightblue;
-  border-radius: 15px;
+  border-radius: 5px;
 }
 
 .text {
   flex-grow: 1;
- 
   justify-items: center;
   margin-left: 10px;
 }
@@ -126,14 +141,13 @@ input {
   display: inline;
   align-items: center;
   justify-items: center;
-
+  outline: transparent;
 }
 
 .edit {
   height: 25px;
   display: inline;
-
-  
+  outline: transparent;
   margin-right: 1px;
   margin-left: 1px;
   background-color: white;
@@ -147,8 +161,7 @@ input {
 .delete {
   height: 25px;
   display: inline;
- 
-
+  outline: transparent;
   margin-right: 1px;
   margin-left: 1px;
   background-color: white;
@@ -161,7 +174,7 @@ input {
 }
 .star{ height: 25px;
   display: inline;
-  
+  outline: transparent;
   margin-right: 1px;
   margin-left: 1px;
   background-color: white;
@@ -173,8 +186,7 @@ input {
 .save {
   height: 25px;
   display: inline;
-  
-
+  outline: transparent;
   margin-right: 1px;
   margin-left: 1px;
   background-color: white;
@@ -189,8 +201,7 @@ input {
 .cansel {
   height: 25px;
   display: inline;
- 
- 
+  outline: transparent;
   margin-right: 1px;
   margin-left: 1px;
   background-color: white;
@@ -199,4 +210,39 @@ input {
   border-radius: 10px;
   -webkit-box-shadow: 2px 2px 15px 3px rgba(0, 0, 0, 0.29);
   box-shadow: 2px 2px 15px 3px rgba(0, 0, 0, 0.29);
+}
+.pages{
+  display:flex;
+  width:161px;
+  align-items: center; 
+  justify-content: space-between;
+  margin: 0 auto;
+  margin-top: 1px;
+}
+.page{
+  height: 25px;
+  width: 28px;
+  display: inline;
+  margin-right: 1px;
+  
+  margin-left: 1px;
+  background-color: white;
+  color: rgba(11, 107, 131, 0.788);
+  border-color: lightskyblue;
+  border-radius: 10px;
+  outline: transparent;
+  -webkit-box-shadow: 2px 2px 15px 3px rgba(0, 0, 0, 0.29);
+  box-shadow: 2px 2px 15px 3px rgba(0, 0, 0, 0.29);
+}
+.numberPage{
+  flex-grow: 1;
+  color: rgba(11, 107, 131, 0.788);
+  text-align: center;
+}
+.pageNet{
+  height: 25px;
+  width: 28px;
+  display: inline;
+  margin-right: 1px;
+  margin-left: 1px;
 }
