@@ -1,23 +1,18 @@
 import React, { useState } from 'react'
 import './../../App'
+import {useSelector, useDispatch} from 'react-redux'
+import {addTodo, todoPost} from '../../store/actions/actions'
 // import ButtonMenu from '../../components/todoAdd/ButtonMenu'
+import { getTodos } from './../../store/actions/actions'
 
 
-function AddTodoForm({ todos, setTodos, handler }) {
+function AddTodoForm({todos}) {
+
+  const dispatch = useDispatch()
+  // const todos = useSelector(state => state)
+
   const [title, setTitle] = useState('')
-  const addTask = async (todo) => {
-    try {
-      await fetch('http://10.1.1.20:4001/api/task',
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', userid: localStorage.getItem("userid") },
-          body: JSON.stringify(todo)
-        });
-      return true
-    } catch (error) {
-      throw error
-    }
-  }
+  // const addTask = dispatch(todoPost())
 
   function submit(e) {
     e.preventDefault()
@@ -29,14 +24,16 @@ function AddTodoForm({ todos, setTodos, handler }) {
         isPerfomed: false,
         date: date
       }
-      const newTodos = [ ...todos,todo];  //newTodos.push(todo);
-      if (addTask(todo)) {
-        setTodos(newTodos)
-      } else {
-        console.log('Туду не добавленно');
-      }
+      const newTodos = [ ...todos,todo];
+      // if (addTask(todo)) {
+      //   dispatch(getTodos(newTodos))
+      // } else {
+      //   console.log('Туду не добавленно');
+      // }
       setTitle('')
-    }}
+    }
+  dispatch(addTodo('text1'))
+  }
   // React.useEffect(()=>handler,[setTodos])
 //==========================================================================================
   return (
@@ -44,6 +41,7 @@ function AddTodoForm({ todos, setTodos, handler }) {
       {/* <ButtonMenu className='menu' /> */}
       <input type="text" value={title} onChange={({ target }) => setTitle(target.value)} />
       <button className='add' type='submit'>add</button>
+    
     </form>
   )
 }

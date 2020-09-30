@@ -1,92 +1,91 @@
-import React, { useState } from 'react'
-import './TodoList'
+import React, { useState } from "react";
+import "./TodoList";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteTodoPost, updateTaskFetch , updateTask, updateStar, updateCompleted} from "../../store/actions/actions";
 
-function TodoListItem({ todo, todos, setTodos }) {
-    const [text, settext] = useState(todo.text);
-    const [onRedact, setonRedact] = useState(false);
+function TodoListItem({ todo, setTodos }) {
+  const [text, settext] = useState(todo.text);
+  const [onRedact, setonRedact] = useState(false);
+const dispatch = useDispatch();
+ let todos = useSelector((state) => state);
 
-    function deleteDo() { setTodos(todos = todos.filter(el => el.id !== todo.id)); console.log(todo.id); deleteTask() }
-    const deleteTask = async () => {
-        try {
-            let response = await fetch('http://10.1.1.20:4001/api/task/' + todo.id,
-                {
-                    method: 'DELETE',
-                    headers: { 'Content-Type': 'application/json', userid: localStorage.getItem("userid") },
-                }
-            );
-            response = await response.json()
-            console.log(response)
-        }
-        catch (error) {
-            throw error
-        }
+  const deleteTodo = () => {
+    dispatch(deleteTodoPost(todo.id));
+  };
+  
+  const updateTasks=  () => {
+    dispatch( updateTaskFetch(todo.id,todo))
+  };
+
+  function save(e) {
+    e.preventDefault();
+    if (text.trim()) {
+      dispatch(updateTask(todo.id, text))
+      settext(todo.text);
+      setonRedact(!onRedact);
     }
+    
+  }
 
-    const updateTask = async () => {
-        try {
-            let response = await fetch('http://10.1.1.20:4001/api/task/' + todo.id,
-                {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json', userid: localStorage.getItem("userid") },
-                    body: JSON.stringify(todo)
-                }
-            );
-            response = await response.json()
-            console.log(response)
-        }
-        catch (error) {
-            throw error
-        }
-    }
+  function markItem(todoId) {
+    dispatch(updateStar(todoId))
+    updateTasks();
+  }
 
-    function save(e) {
-        e.preventDefault()
-        if (text.trim()) {
-            const newTodos = [...todos];
-            const index = newTodos.findIndex((elem) => elem.id === todo.id)
-            newTodos[index].text = text
-            setTodos(newTodos)
-            settext(todo.text)
-            setonRedact(!onRedact)
-        }
-    }
-
-    function markItem(todoId) {
-        const newTodos = [...todos];
-        const updatedItem = newTodos.find((elem) => elem.id === todoId);
-        updatedItem.isTagged = !updatedItem.isTagged;
-        setTodos(newTodos)
-        updateTask()
-    }
-
-    function markItemSecond(todoId) {
-        const newTodos = [...todos];
-        const updatedItem = newTodos.find((elem) => elem.id === todoId);
-        updatedItem.isPerformed = !updatedItem.isPerformed;
-        setTodos(newTodos)
-        updateTask()
-    }
-//============================================================================================================
-    return (
-        <>
-            {!onRedact ? <div className="todo__item">
-                <input type="checkbox" className='chek' checked={todo.isPerformed} onChange={() => markItemSecond(todo.id)} />
-                <div className='text'> {todo.text}</div>
-                    <button className='star' onClick={() => markItem(todo.id)}>
-                        {!todo.isTagged ? '☆' : '★'}
-                    </button>
-                    <button className='edit' onClick={() => setonRedact(!onRedact)}>
-                        ✎
-                    </button>
-                    <button className='delete' onClick={deleteDo}>✖</button>
-                </div> :
-                <form className='onRedact'
-                    onSubmit={(e) => { save(e); updateTask() }}>
-                    <input className='inputChange' type="text" value={text} onChange={(e) => settext(e.target.value)} />
-                    <button className='save' type='submit' >✔</button>
-                    <button className='cansel' onClick={() => { setonRedact(!onRedact) }}>✖</button>
-                </form>}
-        </>
-    )
+  function markItemSecond(todoId) {
+    dispatch(updateCompleted(todoId))
+    updateTasks();
+  }
+  //============================================================================================================
+  return (
+    <>
+      {!onRedact ? (
+        <div className="todo__item">
+          <input
+            type="checkbox"
+            className="chek"
+            checked={todo.isPerformed}
+            onChange={() => markItemSecond(todo.id)}
+          />
+          <div className="text"> {todo.text}</div>
+          <button className="star" onClick={() => markItem(todo.id)}>
+            {!todo.isTagged ? "☆" : "★"}
+          </button>
+          <button className="edit" onClick={() => setonRedact(!onRedact)}>
+            ✎
+          </button>
+          <button className="delete" onClick={deleteTodo}>
+            ✖
+          </button>
+        </div>
+      ) : (
+        <form
+          className="onRedact"
+          onSubmit={(e) => {
+            save(e);
+            updateTasks();
+          }}
+        >
+          <input
+            className="inputChange"
+            type="text"
+            value={text}
+            onChange={(e) => settext(e.target.value)}
+          />
+          <button className="save" type="submit">
+            ✔
+          </button>
+          <button
+            className="cansel"
+            onClick={() => {
+              setonRedact(!onRedact);
+            }}
+          >
+            ✖
+          </button>
+        </form>
+      )}
+    </>
+  );
 }
-export default TodoListItem
+export default TodoListItem;
